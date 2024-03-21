@@ -1,0 +1,4 @@
+Dataset/Zips/*
+__pycache__/
+.env
+Dataset/
