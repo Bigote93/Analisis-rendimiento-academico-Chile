@@ -1,31 +1,10 @@
 # Archivos
 __pycache__/
-Estadisticas/2002/rendimiento2002.csv
-Estadisticas/2003/rendimiento2003.csv
-Estadisticas/2004/rendimiento2004.csv
-Estadisticas/2005/rendimiento2005.csv
-Estadisticas/2006/rendimiento2006.csv
-Estadisticas/2007/rendimiento2007.csv
-Estadisticas/2008/rendimiento2008.csv
-Estadisticas/2009/rendimiento2009.csv
-Estadisticas/2010/rendimiento2010.csv
-Estadisticas/2011/rendimiento2011.csv
-Estadisticas/2012/rendimiento2012.csv
-Estadisticas/2013/rendimiento2013.csv
-Estadisticas/2014/rendimiento2014.csv
-Estadisticas/2015/rendimiento2015.csv
-Estadisticas/2016/rendimiento2016.csv
-Estadisticas/2017/rendimiento2017.csv
-Estadisticas/2018/rendimiento2018.csv
-Estadisticas/2019/rendimiento2019.csv
-Estadisticas/2020/rendimiento2020.csv
-Estadisticas/2021/rendimiento2021.csv
-Estadisticas/2022/rendimiento2022.csv
-
 # Variables de entorno
 .env
 
 # Folders
+Estadisticas/*
 Dataset/
 Datasetpicke/
 Dataset/Zips/*
