@@ -525,6 +525,9 @@ class Utilidades:
             rendimiento = dataframe
             promedio_establecimiento = rendimiento.groupby('NOMBRE_ESTABLECIMIENTO')['PROMEDIO_GENERAL_ANUAL'].mean().reset_index()
             promedio_establecimiento.to_csv('Estadisticas/'+str(year)+'/promedio_establecimiento'+str(year)+'.csv')
+            
+            # Ordenar de forma descendente
+            promedio_establecimiento = promedio_establecimiento.sort_values('PROMEDIO_GENERAL_ANUAL', ascending=False)
             return promedio_establecimiento
         except Exception as e:
             print('Error al obtener el promedio de promedio por establecimiento del año:', year)

@@ -34,9 +34,11 @@ df_rendimiento = util.getAnalisisAlumno(dataframe=df_rendimiento, year=2002)
 
 # ------------ OBTENER PROMEDIO DE PROMEDIO_GENERAL_ANUAL por NOMBRE_ESTABLECIMIENTO ------------
 df_promedio = util.getPromedioEstablecimiento(dataframe=df_rendimiento, year=year)
-#ordenando por promedio
-df_promedio = df_promedio.sort_values(by='PROMEDIO_GENERAL_ANUAL', ascending=False)
-print(df_promedio.head(10))
+
+# ------------ OBTENER CORRELACION ENTRE COLUMNAS DEL DATAFAME SIN COLUMNA NOMBRE_ESTABLECIMIENTO------------
+df_ = df_rendimiento.drop(columns=['NOMBRE_ESTABLECIMIENTO', 'MASCARA_RUN_ALUMNO'])
+correlacion = df_.corr()
+print(correlacion)
 
 
 
