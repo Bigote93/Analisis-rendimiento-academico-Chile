@@ -2,31 +2,46 @@
 # Autor: Diego Nalli
 # Fecha: 2024-03-20
 
-# Importar librerías
-import pandas as pd
+# ------------ IMPORTACIONES LIBRERIA ----------
 import sys
 import os
 
-# Incorporamos el path para poder importar las utilidades
+import pandas as pd
+from sklearn.preprocessing import StandardScaler
+
+# ------------ Incorporamos el path para poder importar las utilidades ------------
 parent_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 sys.path.append(parent_dir)
 
-# Importamos las utilidades
+# ------------ IMPORTACION MODULOS PROPIOS ------------
 from Recursos.utilidades import Utilidades
-variables = Utilidades()
+util = Utilidades()
 
-# Variables
-rendimiento2002 = pd.DataFrame()
+# ------------ VARIABLES GLOBALES ------------
+year = 2002
 
-# Cargamos dataset
-for element in variables.routes_dict:
-    if element['year'] == 2002:
-        try:
-            
-            rendimiento2002 = pd.read_csv(element['route'], sep=';', encoding='latin1')
-            print('Cargado el dataset del año:', element['year'])
-        except Exception as e:
-            print('Error al cargar el dataset del año:', element['year'])
-            print('Error:', e)
+# ------------ LECTURA DE DATAFRAME ORIGINAL ------------
+df_rendimiento = util.getDataset(2002)
 
-print(rendimiento2002.head(5))
+# ------------ GENERAR DATAFRAME DE ESTABLECIMIENTOS UNICOS DEL AÑO ------------ 
+establecimientos = util.getEstablecimientosUnicos(dataframe=df_rendimiento, year=year)
+
+# ------------ CAMBIAR EL TIPO DE DATO DE PROMEDIO ANUAL ------------
+df_rendimiento = util.changeTypePromedio(dataframe=df_rendimiento, year=year)
+
+# ------------ OBTENER DATAFRAME DE ANALISIS DE ESTUDIANTES ------------
+df_rendimiento = util.getAnalisisAlumno(dataframe=df_rendimiento, year=2002)
+
+# ------------ OBTENER PROMEDIO DE PROMEDIO_GENERAL_ANUAL por NOMBRE_ESTABLECIMIENTO ------------
+df_promedio = util.getPromedioEstablecimiento(dataframe=df_rendimiento, year=year)
+#ordenando por promedio
+df_promedio = df_promedio.sort_values(by='PROMEDIO_GENERAL_ANUAL', ascending=False)
+print(df_promedio.head(10))
+
+
+
+
+
+
+
+

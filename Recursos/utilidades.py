@@ -1,5 +1,6 @@
 # Funciones útiles para el manejo de archivos y directorios
 import pandas as pd
+import pickle
 import json
 
 # Rutas documentos
@@ -34,50 +35,50 @@ class Utilidades:
     ]
 
     # Nombre de columnas
-    map_columns = [
-        {'AGNO': 'AÑO'},
-        {'RBD': 'ROL_ESTABLECIMIENTO'},
-        {'DGV_RBD':'DIGITO_VERIFICADOR_RBD'},
-        {'NOM_RBD': 'NOMBRE_ESTABLECIMIENTO'},
-        {'LET_RBD': 'LETRA_ESTABLECIMIENTO'},
-        {'NUM_RBD':'NUMERO_ESTABLECIMIENTO'},
-        {'COD_REG_RBD': 'CODIGO_REGION_ESTABLECIMIENTO'},
-        {'NOM_REG_RBD_A': 'NOMBRE_ABREV_REGION_ESTABLECIMIENTO'},
-        {'COD_PRO_RBD': 'CODIGO_OFICIAL_PROVINCIA_ESTABLECIMIENTO'},
-        {'COD_COM_RBD': 'CODIGO_OFICIAL_COMUNA_ESTABLECIMIENTO'},
-        {'NOM_COM_RBD': 'NOMBRE_COMUNA_ESTABLECIMIENTO'},
-        {'COD_DEPROV_RBD':'CODIGO_DEPARTAMENTO_PROVINCIAL_ESTABLECIMIENTO'},
-        {'NOM_DEPROV_RBD':'NOMBRE_DEPARTAMENTO_PROVINCIAL_ESTABLECIMIENTO'},
-        {'COD_DEPE':'CODIGO_DEPENDENCIA_ESTABLECIMIENTO'},
-        {'COD_DEPE2':'CODIGO_DEPENDENCIA_ESTABLECIMIENTO_GRUP'},
-        {'RURAL_RBD':'INDICE_RURALIDAD_ESTABLECIMIENTO'},
-        {'ESTADO_ESTAB':'ESTADO_ESTABLECIMIENTO'},
-        {'COD_ENSE':'CODIGO_ENSENANZA_ESTABLECIMIENTO'},
-        {'COD_ENSE2':'NIVEL_ENSEÑANZA_GRUP'},
-        {'COD_GRADO':'CODIGO_GRADO_ESTABLECIMIENTO'},
-        {'LET_CUR':'LETRA_CURSO'},
-        {'COD_JOR':'JORNADA_ESTABLECIMIENTO'},
-        {'COD_TIP_CUR':'INDICE_TIPO_CURSO'},
-        {'COD_DES_CUR':'DESCRIPCION_CURSO'},
-        {'MRUN':'MASCARA_RUN_ALUMNO'},
-        {'GEN_ALU':'GENERO_ALUMNO'},
-        {'FEC_NAC_ALU':'FECHA_NACIMIENTO_ALUMNO'},
-        {'EDAD_ALU':'EDAD_ALUMNO'},
-        {'INT_ALU':'INDICADOR_ALUMNO'},
-        {'GD_ALU':'CONDICION_DIFERENCIAL_ALUMNO'},
-        {'COD_REG_ALU':'CODIGO_REGION_ALUMNO'},
-        {'COD_COM_ALU':'CODIGO_COMUNA_ALUMNO'},
-        {'NOM_COM_ALU':'NOMBRE_COMUNA_ALUMNO'},
-        {'COD_RAMA':'CODIGO_RAMA'},
-        {'COD_SEC':'CODIGO_SECTOR_ECONOMICO'},
-        {'COD_ESPE':'CODIGO_ESPECIALIDAD'},
-        {'FECH_ING_ALU':'FECHA_INGRESO_ALUMNO'},
-        {'PROM_GRAL':'PROMEDIO_GENERAL_ANUAL'},
-        {'ASISTENCIA':'ASISTENCIA_ANUAL'},
-        {'SIT_FIN':'SITUACION_PROMOCION'},
-        {'SIT_FIN_R':'SITUACION_PROMOCION_TRASLADO'},
-        {'COD_MEN':'MENCION'}
-    ]
+    map_columns = {
+        'AGNO': 'AÑO',
+        'RBD': 'ROL_ESTABLECIMIENTO',
+        'DGV_RBD':'DIGITO_VERIFICADOR_RBD',
+        'NOM_RBD': 'NOMBRE_ESTABLECIMIENTO',
+        'LET_RBD': 'LETRA_ESTABLECIMIENTO',
+        'NUM_RBD':'NUMERO_ESTABLECIMIENTO',
+        'COD_REG_RBD': 'CODIGO_REGION_ESTABLECIMIENTO',
+        'NOM_REG_RBD_A': 'NOMBRE_ABREV_REGION_ESTABLECIMIENTO',
+        'COD_PRO_RBD': 'CODIGO_OFICIAL_PROVINCIA_ESTABLECIMIENTO',
+        'COD_COM_RBD': 'CODIGO_OFICIAL_COMUNA_ESTABLECIMIENTO',
+        'NOM_COM_RBD': 'NOMBRE_COMUNA_ESTABLECIMIENTO',
+        'COD_DEPROV_RBD':'CODIGO_DEPARTAMENTO_PROVINCIAL_ESTABLECIMIENTO',
+        'NOM_DEPROV_RBD':'NOMBRE_DEPARTAMENTO_PROVINCIAL_ESTABLECIMIENTO',
+        'COD_DEPE':'CODIGO_DEPENDENCIA_ESTABLECIMIENTO',
+        'COD_DEPE2':'CODIGO_DEPENDENCIA_ESTABLECIMIENTO_GRUP',
+        'RURAL_RBD':'INDICE_RURALIDAD_ESTABLECIMIENTO',
+        'ESTADO_ESTAB':'ESTADO_ESTABLECIMIENTO',
+        'COD_ENSE':'CODIGO_ENSENANZA_ESTABLECIMIENTO',
+        'COD_ENSE2':'NIVEL_ENSEÑANZA_GRUP',
+        'COD_GRADO':'CODIGO_GRADO_ESTABLECIMIENTO',
+        'LET_CUR':'LETRA_CURSO',
+        'COD_JOR':'JORNADA_ESTABLECIMIENTO',
+        'COD_TIP_CUR':'INDICE_TIPO_CURSO',
+        'COD_DES_CUR':'DESCRIPCION_CURSO',
+        'MRUN':'MASCARA_RUN_ALUMNO',
+        'GEN_ALU':'GENERO_ALUMNO',
+        'FEC_NAC_ALU':'FECHA_NACIMIENTO_ALUMNO',
+        'EDAD_ALU':'EDAD_ALUMNO',
+        'INT_ALU':'INDICADOR_ALUMNO',
+        'GD_ALU':'CONDICION_DIFERENCIAL_ALUMNO',
+        'COD_REG_ALU':'CODIGO_REGION_ALUMNO',
+        'COD_COM_ALU':'CODIGO_COMUNA_ALUMNO',
+        'NOM_COM_ALU':'NOMBRE_COMUNA_ALUMNO',
+        'COD_RAMA':'CODIGO_RAMA',
+        'COD_SEC':'CODIGO_SECTOR_ECONOMICO',
+        'COD_ESPE':'CODIGO_ESPECIALIDAD',
+        'FECH_ING_ALU':'FECHA_INGRESO_ALUMNO',
+        'PROM_GRAL':'PROMEDIO_GENERAL_ANUAL',
+        'ASISTENCIA':'ASISTENCIA_ANUAL',
+        'SIT_FIN':'SITUACION_PROMOCION',
+        'SIT_FIN_R':'SITUACION_PROMOCION_TRASLADO',
+        'COD_MEN':'MENCION'
+    }
 
     # Mapa de codigo region (COD_REG_RBD)
     map_region = {
@@ -385,17 +386,152 @@ class Utilidades:
         72007-72007004: 'Vitivinicola',
     }
 
+    # Mapa de dependencia (COD_DEPE)
+    map_dependencia = {
+        1: 'Corporacion Municipal',
+        2: 'Municipal DAEM',
+        3: 'Particular subvencionado',
+        4: 'Particular pagado (no subvencionado)',
+        5: 'Corporacion de administracion delegada',
+        6: 'Servicio local de educacion'
+    }
+
+    # Mapa indice ruralidzd del establecimiento
+    map_ruralidad = {
+        0: 'Urbano',
+        1: 'Rural'
+    }
+
+    # Mapa estado establecimiento
+    map_estado = {
+        1: 'Funcionando',
+        2: 'En receso',
+        3: 'Cerrado',
+        4: 'Autorizado sin matricula'
+    }
+
+    # Mapa jornada que asiste a clases estudiante
+    map_jornada = {
+        1: 'Mañana',
+        2: 'Tarde',
+        3: 'Mañana y tarde',
+        4: 'Vespertina / nocturna'
+    }
+
+    # Mapa tipo curso
+    map_tipocurso = {
+        0: 'Curso simple',
+        '1-6': 'Curso combinado'
+    }
+
+    # Mapa descripcion curso
+    map_descripcion = {
+        0: 'No Aplica',
+        1: 'Solo liceo',
+        2: 'Dual',
+        3: 'Otro'
+    }
+
+    # Mapa genero estudiante
+    map_genestu = {
+        0: 'Sin informacion',
+        1: 'Masculino',
+        2: 'Femenino'
+    }
 
 
-    # Generame una variable de dataframe de ejemplo
-    def get_example_df(self):
-        return pd.DataFrame({'A': [1, 2, 3], 'B': [4, 5, 6]})
+
+    # Funcion que carga los dataset de rendimiento 
+    def getDataset(self, year):
+        for element in self.routes_dict:
+            if element['year'] == year:
+                try:
+                    rendimiento = pd.read_csv(element['route'], sep=';', encoding='latin1')
+
+                    # Cambio de nombre de columnas
+                    rendimiento = rendimiento.rename(columns=self.map_columns)
+                    rendimiento.to_csv('Estadisticas/'+str(year)+'/rendimiento'+str(year)+'.csv')
+
+                    # Almacenar estadisticas en un archivo .csv
+                    descripcion_estats = rendimiento.describe()
+                    descripcion_estats.to_csv('Estadisticas/'+str(year)+'/rendimiento'+str(year)+'_descripcion.csv')
+
+                    return rendimiento
+
+                except Exception as e:
+                    print('Error al cargar el dataset del año:', element['year'])
+                    print('Error:', e)
+                    return None
+                
+    # Funcion para obtener las escuelas unicas de un año (NOMBRE_ESTABLECIMIENTO, ROL_ESTABLECIMIENTO)
+    def getEstablecimientosUnicos(self, dataframe, year):
+        try:
+            rendimiento = dataframe
+            return rendimiento[['NOMBRE_ESTABLECIMIENTO', 'ROL_ESTABLECIMIENTO']].drop_duplicates()
+        except Exception as e:
+            print('Error al determinar los establecimientos unicos del año:', year)
+            print('Error:', e)
+            return None
     
+    # Funcion para obtener columnas de analisis de alumno
+    ## Columnas de interes:
+        ## NOMBRE_ESTABLECIMIENTO
+        ## CODIGO_REGION_ESTABLECIMIENTO
+        ## CODIGO_OFICIAL_COMUNA_ESTABLECIMIENTO
+        ## CODIGO_DEPENDENCIA_ESTABLECIMIENTO
+        ## CODIGO_ENSENANZA_ESTABLECIMIENTO
+        ## CODIGO_GRADO_ESTABLECIMIENTO
+        ## GENERO_ALUMNO
+        ## CODIGO_COMUNA_ALUMNO
+        ## PROMEDIO_GENERAL_ANUAL
+        ## ASISTENCIA_ANUAL
+        ## MASCARA_RUN_ALUMNO
+    def getAnalisisAlumno(self, dataframe, year):
+        
+        try:
+            rendimiento = dataframe
+            analisis_estudiante = rendimiento[[
+                'NOMBRE_ESTABLECIMIENTO', 'CODIGO_REGION_ESTABLECIMIENTO', 'CODIGO_OFICIAL_COMUNA_ESTABLECIMIENTO', 
+                'CODIGO_DEPENDENCIA_ESTABLECIMIENTO', 'CODIGO_ENSENANZA_ESTABLECIMIENTO', 'CODIGO_GRADO_ESTABLECIMIENTO', 
+                'GENERO_ALUMNO', 'CODIGO_COMUNA_ALUMNO', 'PROMEDIO_GENERAL_ANUAL', 'ASISTENCIA_ANUAL','MASCARA_RUN_ALUMNO'
+                ]]
+            
+            # Almacenar dataset en un archivo .csv
+            analisis_estudiante.to_csv('Estadisticas/'+str(year)+'/analisis_estudiante'+str(year)+'.csv')
 
-    # Funcion que recibe un JSON y una ruta donde guardar el JSON
-    def save_json(self, json_data, path):
-        with open(path, 'w') as file:
-            json.dump(json_data, file)
+            return analisis_estudiante
+        except Exception as e:
+            print('Error al obtener el dataframe de analisis de alumno del año:', year)
+            print('Error:', e)
+            return None
+
+
+    
+    # Funcion para cambiar el tipo de dato de la columna PROMEDIO_GENERAL_ANUAL
+    def changeTypePromedio(self, dataframe, year):
+        
+        try:
+            rendimiento = dataframe
+            rendimiento['PROMEDIO_GENERAL_ANUAL'] = rendimiento['PROMEDIO_GENERAL_ANUAL'].apply(lambda x: float(x.replace(',', '.')) if x is not None else None)
+            return rendimiento
+        except Exception as e:
+            print('Error al cambiar el tipo de dato de los promedios:', year)
+            print('Error:', e)
+            return None
+    
+    # Funcion para obtener el promedio de PROMEDIO_GENERAL_ANUAL por NOMBRE_ESTABLECIMIENTO
+    def getPromedioEstablecimiento(self, dataframe, year):
+        try:
+            rendimiento = dataframe
+            promedio_establecimiento = rendimiento.groupby('NOMBRE_ESTABLECIMIENTO')['PROMEDIO_GENERAL_ANUAL'].mean().reset_index()
+            promedio_establecimiento.to_csv('Estadisticas/'+str(year)+'/promedio_establecimiento'+str(year)+'.csv')
+            return promedio_establecimiento
+        except Exception as e:
+            print('Error al obtener el promedio de promedio por establecimiento del año:', year)
+            print('Error:', e)
+            return None
+
+
 
  
 
