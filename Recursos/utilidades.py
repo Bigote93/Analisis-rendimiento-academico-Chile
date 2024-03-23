@@ -1,7 +1,8 @@
 # Funciones útiles para el manejo de archivos y directorios
 import pandas as pd
-import pickle
-import json
+import seaborn as sns
+import matplotlib.pyplot as plt
+from sklearn.preprocessing import StandardScaler
 
 # Rutas documentos
 class Utilidades:
@@ -209,28 +210,60 @@ class Utilidades:
 
     # Mapa grados tipo enseñanza (COD_GRADO) por nivel de enseñanza (COD_ENSE)
     map_grado = {
-        110-1: '1° Básico', 110-2: '2° Básico', 110-3: '3° Básico', 110-4: '4° Básico', 110-5: '5° Básico', 110-6: '6° Básico', 110-7: '7° Básico', 110-8: '8° Básico',
+        110-1: '1° Básico', 
+        110-2: '2° Básico', 
+        110-3: '3° Básico', 
+        110-4: '4° Básico', 
+        110-5: '5° Básico', 
+        110-6: '6° Básico', 
+        110-7: '7° Básico', 
+        110-8: '8° Básico',
 
         160-1: 'Alfabetización',
-        160-2: 'Nivel Básico 1 (1° a 4° Básico)', 160-3: 'Nivel Básico 2 (5° a 6° Básico)', 160-4: 'Nivel Básico 3 (7° a 8° Básico)', 160-5: 'Nivel Técnico',
+        160-2: 'Nivel Básico 1 (1° a 4° Básico)', 
+        160-3: 'Nivel Básico 2 (5° a 6° Básico)', 
+        160-4: 'Nivel Básico 3 (7° a 8° Básico)', 
+        160-5: 'Nivel Técnico',
 
-        161-1: 'Alfabetización', 161-2: 'Nivel Básico 1 (1° a 4° Básico)', 161-3: 'Nivel Básico 2 (5° a 6° Básico)', 161-4: 'Nivel Básico 3 (7° a 8° Básico)', 161-5: 'Nivel Técnico',
+        161-1: 'Alfabetización', 
+        161-2: 'Nivel Básico 1 (1° a 4° Básico)', 
+        161-3: 'Nivel Básico 2 (5° a 6° Básico)', 
+        161-4: 'Nivel Básico 3 (7° a 8° Básico)', 
+        161-5: 'Nivel Técnico',
 
-        163-1: 'Alfabetización', 163-2: 'Nivel Básico 1 (1° a 4° Básico)', 163-3: 'Nivel Básico 2 (5° a 6° Básico)', 163-4: 'Nivel Básico 3 (7° a 8° Básico)', 163-5: 'Nivel Técnico',
+        163-1: 'Alfabetización', 
+        163-2: 'Nivel Básico 1 (1° a 4° Básico)', 
+        163-3: 'Nivel Básico 2 (5° a 6° Básico)', 
+        163-4: 'Nivel Básico 3 (7° a 8° Básico)', 
+        163-5: 'Nivel Técnico',
 
-        165-1: 'Nivel Básico 1 (1° a 4° Básico)', 165-2: 'Nivel Básico 2 (5° a 6° Básico)', 165-3: 'Nivel Básico 3 (7° a 8° Básico)', 
+        165-1: 'Nivel Básico 1 (1° a 4° Básico)', 
+        165-2: 'Nivel Básico 2 (5° a 6° Básico)', 
+        165-3: 'Nivel Básico 3 (7° a 8° Básico)', 
 
-        167-2: 'Nivel Básico 2 (5° a 6° Básico)', 167-3: 'Nivel Básico 3 (7° a 8° Básico)',
+        167-2: 'Nivel Básico 2 (5° a 6° Básico)', 
+        167-3: 'Nivel Básico 3 (7° a 8° Básico)',
 
-        310-1: '1° Medio', 310-2: '2° Medio', 310-3: '3° Medio', 310-4: '4° Medio',
+        310-1: '1° Medio', 
+        310-2: '2° Medio', 
+        310-3: '3° Medio', 
+        310-4: '4° Medio',
 
-        360-1: '1° Medio', 360-2: '2° Medio', 360-3: '3° Medio', 360-4: '4° Medio',
+        360-1: '1° Medio', 
+        360-2: '2° Medio', 
+        360-3: '3° Medio', 
+        360-4: '4° Medio',
 
-        361-1: 'Primer ciclo (1° y 2° Medio)', 361-3: 'Segundo ciclo (3° y 4° Medio)',
+        361-1: 'Primer ciclo (1° y 2° Medio)', 
+        361-3: 'Segundo ciclo (3° y 4° Medio)',
 
-        363-1: 'Primer nivel (1° y 2° Medio)', 363-3: 'Segundo nivel (3° y 4° Medio)',
+        363-1: 'Primer nivel (1° y 2° Medio)', 
+        363-3: 'Segundo nivel (3° y 4° Medio)',
 
-        410-1: '1° Medio', 410-2: '2° Medio', 410-3: '3° Medio', 410-4: '4° Medio',
+        410-1: '1° Medio', 
+        410-2: '2° Medio', 
+        410-3: '3° Medio', 
+        410-4: '4° Medio',
 
         460-1: 'Primer ciclo (1° y 2° Medio)', 460-3: '3° Medio', 460-4: '4° Medio',
 
@@ -524,17 +557,148 @@ class Utilidades:
         try:
             rendimiento = dataframe
             promedio_establecimiento = rendimiento.groupby('NOMBRE_ESTABLECIMIENTO')['PROMEDIO_GENERAL_ANUAL'].mean().reset_index()
-            promedio_establecimiento.to_csv('Estadisticas/'+str(year)+'/promedio_establecimiento'+str(year)+'.csv')
+            
+            # Agregar columna de año
+            promedio_establecimiento['ANIO'] = year
             
             # Ordenar de forma descendente
             promedio_establecimiento = promedio_establecimiento.sort_values('PROMEDIO_GENERAL_ANUAL', ascending=False)
+
+            # Almacenar dataset en un archivo .csv
+            promedio_establecimiento.to_csv('Estadisticas/'+str(year)+'/promedio_establecimiento'+str(year)+'.csv')
             return promedio_establecimiento
         except Exception as e:
             print('Error al obtener el promedio de promedio por establecimiento del año:', year)
             print('Error:', e)
             return None
+        
+    # Funcion para generar columnas dummy para las columnas:
+        ## CODIGO_REGION_ESTABLECIMIENTO
+        ## CODIGO_DEPENDENCIA_ESTABLECIMIENTO
+        ## CODIGO_GRADO_ESTABLECIMIENTO
+        ## GENERO_ALUMNO
+    def getDummies(self, dataframe, year):
 
+        # Mapa de columnas y prefix
+        map_columns = {
+            'CODIGO_REGION_ESTABLECIMIENTO': 'REGION',
+            'CODIGO_DEPENDENCIA_ESTABLECIMIENTO': 'DEPENDENCIA',
+            'CODIGO_GRADO_ESTABLECIMIENTO': 'GRADO',
+            'GENERO_ALUMNO': 'GENERO'
+        }
 
+        try:
+            rendimiento = dataframe
+            
+            for column in map_columns.keys():
+                dummies = pd.get_dummies(rendimiento[column], prefix=map_columns[column]).astype(int)
+                rendimiento = rendimiento.drop(column, axis=1)
+                rendimiento = pd.concat([rendimiento, dummies], axis=1)
+            
+            # Almacenar dataset en un archivo .csv
+            rendimiento.to_csv('Estadisticas/'+str(year)+'/rendimiento_dummies'+str(year)+'.csv')
+            return rendimiento
 
- 
+        except Exception as e:
+            print('Error al generar las columnas dummy del año:', year)
+            print('Error:', e)
+            return None
+    
+    # Funcion para graficar genero y dependencia del establecimiento por region
+    def graficoGeneroDependencia(self, dataframe, year):
+        df_trabajar = dataframe[[
+            'GENERO_ALUMNO',
+            'CODIGO_DEPENDENCIA_ESTABLECIMIENTO',
+        ]]
 
+        # CAMBIAR REGISTROS POR MAPA DE GENERO Y DEPENDENCIA
+        df_trabajar['GENERO_ALUMNO'] = df_trabajar['GENERO_ALUMNO'].map(self.map_genestu)
+        df_trabajar['CODIGO_DEPENDENCIA_ESTABLECIMIENTO'] = df_trabajar['CODIGO_DEPENDENCIA_ESTABLECIMIENTO'].map(self.map_dependencia)
+
+        # AGRUPAMOS POR GENERO Y DEPENDENCIA
+        df_trabajar = df_trabajar.groupby(['GENERO_ALUMNO', 'CODIGO_DEPENDENCIA_ESTABLECIMIENTO']).size().reset_index()
+        df_trabajar.columns = ['GENERO_ALUMNO', 'CODIGO_DEPENDENCIA_ESTABLECIMIENTO', 'TOTAL']
+
+        # ASIGNACION TAMAÑO GRAFICO
+        plt.figure(figsize=(12, 8))
+
+        # Definir una paleta de colores personalizada para los géneros
+        #palette = {'Canadá': 'red', 'Estados Unidos': 'blue', 'México': 'green'}
+
+        # GRAFICO DE BARRAS
+        sns.barplot(
+            x='GENERO_ALUMNO',
+            y='TOTAL',
+            hue='CODIGO_DEPENDENCIA_ESTABLECIMIENTO',
+            data=df_trabajar
+        )
+
+        # ASIGNAR CANTIDAD DE ALUMNOS A CADA BARRA
+        for i in range(df_trabajar.shape[0]):
+            bar = plt.gca().patches[i]
+            plt.text(bar.get_x() + bar.get_width() / 2, bar.get_y() + bar.get_height(), df_trabajar.loc[i, 'TOTAL'], ha="center", va="bottom", fontsize=8)
+
+        
+        # TITULOS Y ETIQUETAS
+        plt.title(f'Cantidad de alumnos por genero y dependencia del establecimiento - {year}')
+        plt.xlabel('Genero')
+        plt.ylabel('Cantidad de alumnos')
+
+        # MOVER LA LEYENDA FUERA DEL GRÁFICO Y AJUSTAR EL ESPACIO
+        plt.legend(bbox_to_anchor=(1.05, 1), loc='upper left')
+
+        # ALMACENAR GRAFICO
+        plt.tight_layout()
+        plt.savefig('Estadisticas/'+str(year)+'/Graficos/grafico_genero_dependencia'+str(year)+'.png')
+
+        
+    # Funcion para graficar promedio de alumnos por dependencia del establecimiento y genero
+    def graficoPromedioDependencia(self, dataframe, year):
+        df_trabajar = dataframe[[
+            'PROMEDIO_GENERAL_ANUAL',
+            'CODIGO_DEPENDENCIA_ESTABLECIMIENTO',
+            'GENERO_ALUMNO'
+            ]]
+
+        # CAMBIAR REGISTROS POR MAPA DE DEPENDENCIA
+        df_trabajar['CODIGO_DEPENDENCIA_ESTABLECIMIENTO'] = df_trabajar['CODIGO_DEPENDENCIA_ESTABLECIMIENTO'].map(self.map_dependencia)
+        df_trabajar['GENERO_ALUMNO'] = df_trabajar['GENERO_ALUMNO'].map(self.map_genestu)
+
+        # CONVERTIR PROMEDIO GENERAL A TIPO FLOAT
+        df_trabajar['PROMEDIO_GENERAL_ANUAL'] = df_trabajar['PROMEDIO_GENERAL_ANUAL'].astype(float)
+
+        # CALCULAR PROMEDIO DE PROMEDIO GENERAL DE ALUMNOS POR DEPENDENCIA Y GENERO
+        df_trabajar = df_trabajar.groupby(['CODIGO_DEPENDENCIA_ESTABLECIMIENTO', 'GENERO_ALUMNO'])['PROMEDIO_GENERAL_ANUAL'].mean().reset_index()
+        
+        # GRAFICO DE BARRAS DE PROMEDIO DE PROMEDIO GENERAL DE ALUMNOS POR DEPENDENCIA Y GENERO
+        plt.figure(figsize=(12, 8))
+        sns.barplot(
+            x='GENERO_ALUMNO', 
+            y='PROMEDIO_GENERAL_ANUAL',
+            hue='CODIGO_DEPENDENCIA_ESTABLECIMIENTO',
+            data=df_trabajar
+        )
+
+        # ASIGNAR PROMEDIO DE PROMEDIO GENERAL A CADA BARRA
+        for i in range(df_trabajar.shape[0]):
+            bar = plt.gca().patches[i]
+            plt.text(bar.get_x() + bar.get_width() / 2, bar.get_y() + bar.get_height(), round(df_trabajar.loc[i, 'PROMEDIO_GENERAL_ANUAL'], 2), ha="center", va="bottom", fontsize=8)
+
+        # ESTABLECER LIMITE EN Y EN 4
+        plt.ylim(5, plt.ylim()[1])
+
+        # CREAR LINEA PROMEDIO GENERAL Y SU VALOR ENCIMA DE LA LINEA A LA DERECHA DEL GRAFICO
+        plt.axhline(df_trabajar['PROMEDIO_GENERAL_ANUAL'].mean(), color='black', linestyle='--', label='Promedio general')
+        plt.text(1.1, df_trabajar['PROMEDIO_GENERAL_ANUAL'].mean(), round(df_trabajar['PROMEDIO_GENERAL_ANUAL'].mean(), 2), ha="center", va="bottom", fontsize=8)
+
+        # TITULOS Y ETIQUETAS
+        plt.title(f'Promedio de promedio general de alumnos por dependencia y genero - {year}')
+        plt.xlabel('Dependencia')
+        plt.ylabel('Promedio de promedio general')
+
+        # MOVER LA LEYENDA FUERA DEL GRÁFICO Y AJUSTAR EL ESPACIO
+        plt.legend(bbox_to_anchor=(1.05, 1), loc='upper left')
+
+        # ALMACENAR GRAFICO
+        plt.tight_layout()
+        plt.savefig('Estadisticas/'+str(year)+'/Graficos/grafico_promedio_dependencia'+str(year)+'.png')
