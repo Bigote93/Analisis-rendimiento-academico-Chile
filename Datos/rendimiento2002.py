@@ -85,10 +85,8 @@ for ruta_promedio in util.routes_promedio:
 
 
 # ------------ CONSEGUIR REGISTROS DE merge_establecimientos EN QUE EL VALOR DE ROL_ESTABLECIMIENTO SEA 9967 ------------
-rol_establecimiento = 9967
-df_rol = merge_establecimientos[merge_establecimientos['ROL_ESTABLECIMIENTO'] == rol_establecimiento]
-print('Registros con ROL_ESTABLECIMIENTO = 9967')
-print(df_rol)
+rol = 9967
+print(util.graficoPromedioEstablecimiento(dataframe=merge_establecimientos, rolestablecimiento=rol))
 
 
 

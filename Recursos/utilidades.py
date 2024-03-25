@@ -1,5 +1,6 @@
 # Funciones útiles para el manejo de archivos y directorios
 import pandas as pd
+import numpy as np
 import seaborn as sns
 import matplotlib.pyplot as plt
 from sklearn.preprocessing import StandardScaler
@@ -741,3 +742,51 @@ class Utilidades:
             print('Error al determinar los establecimientos unicos del año:', year)
             print('Error:', e)
             return None
+    
+    # Funcion que crea un grafico de linea con el promedio de promedio general de alumnos por ROLES de establecimiento
+    def graficoPromedioEstablecimiento(self, dataframe, rolestablecimiento):
+        rendimiento = dataframe
+        # Dataframe de rendimiento anual por ROL_ESTABLECIMIENTO
+        rendimiento = rendimiento[rendimiento['ROL_ESTABLECIMIENTO'] == rolestablecimiento]
+
+        # Calcular el cambio en el promedio general de un año a otro
+        rendimiento['CAMBIO_PROMEDIO'] = [1 if i >= rendimiento['PROMEDIO_GENERAL_ANUAL'].iloc[indx - 1] else 0 for indx, i in enumerate(rendimiento['PROMEDIO_GENERAL_ANUAL'])]
+        # Definir los colores basados en el cambio del promedio
+        colors = ['blue' if cambio == 1 else 'red' for cambio in rendimiento['CAMBIO_PROMEDIO']]
+
+        return rendimiento
+
+        # # Grafico de linea de promedio de promedio general de alumnos por año
+        # plt.figure(figsize=(12, 8))
+        # sns.lineplot(
+        #     x='ANIO',
+        #     y='PROMEDIO_GENERAL_ANUAL',
+        #     data=rendimiento,
+        #     color='grey'  # Color de línea gris
+        # )
+
+        # # Plotear puntos con colores basados en el cambio del promedio
+        # plt.scatter(
+        #     x=rendimiento['ANIO'],
+        #     y=rendimiento['PROMEDIO_GENERAL_ANUAL'],
+        #     color=colors,
+        #     s=100  # Tamaño de los puntos
+        # )
+
+        # # Asignar el valor del promedio de promedio general a cada punto
+        # for i in range(rendimiento.shape[0]):
+        #     plt.text(rendimiento.loc[i, 'ANIO'], rendimiento.loc[i, 'PROMEDIO_GENERAL_ANUAL'], 
+        #             round(rendimiento.loc[i, 'PROMEDIO_GENERAL_ANUAL'], 2), 
+        #             ha="center", va="bottom", fontsize=8)
+
+        # # Titulos y etiquetas
+        # plt.title(f'Promedio de promedio general de alumnos por año - {rolestablecimiento}')
+        # plt.xlabel('Año')
+        # plt.ylabel('Promedio de promedio general')
+
+        # # Incorporar una linea horizontal en el promedio general 
+        # plt.axhline(rendimiento['PROMEDIO_GENERAL_ANUAL'].mean(), color='black', linestyle='--', label='Promedio general')
+
+        # # Almacenar el grafico
+        # plt.tight_layout()
+        # plt.savefig('Estadisticas/Generales/Graficos/grafico_promedio_establecimiento'+str(rolestablecimiento)+'.png')
