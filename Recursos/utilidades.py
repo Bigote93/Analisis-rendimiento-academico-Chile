@@ -35,50 +35,76 @@ class Utilidades:
         {'year': 2022, 'route': './Dataset/Rendimiento-2022/20230209_Rendimiento_2022_20230131_WEB.csv',}
     ]
 
+
+    routes_promedio = [
+        {'year': 2002, 'route': './Estadisticas/2002/promedio_establecimiento2002.csv',},
+        {'year': 2003, 'route': './Estadisticas/2003/promedio_establecimiento2003.csv',},
+        {'year': 2004, 'route': './Estadisticas/2004/promedio_establecimiento2004.csv',},
+        {'year': 2005, 'route': './Estadisticas/2005/promedio_establecimiento2005.csv',},
+        {'year': 2006, 'route': './Estadisticas/2006/promedio_establecimiento2006.csv',},
+        {'year': 2007, 'route': './Estadisticas/2007/promedio_establecimiento2007.csv',},
+        {'year': 2008, 'route': './Estadisticas/2008/promedio_establecimiento2008.csv',},
+        {'year': 2009, 'route': './Estadisticas/2009/promedio_establecimiento2009.csv',},
+        {'year': 2010, 'route': './Estadisticas/2010/promedio_establecimiento2010.csv',},
+        {'year': 2011, 'route': './Estadisticas/2011/promedio_establecimiento2011.csv',},
+        {'year': 2012, 'route': './Estadisticas/2012/promedio_establecimiento2012.csv',},
+        {'year': 2013, 'route': './Estadisticas/2013/promedio_establecimiento2013.csv',},
+        {'year': 2014, 'route': './Estadisticas/2014/promedio_establecimiento2014.csv',},
+        {'year': 2015, 'route': './Estadisticas/2015/promedio_establecimiento2015.csv',},
+        {'year': 2016, 'route': './Estadisticas/2016/promedio_establecimiento2016.csv',},
+        {'year': 2017, 'route': './Estadisticas/2017/promedio_establecimiento2017.csv',},
+        {'year': 2018, 'route': './Estadisticas/2018/promedio_establecimiento2018.csv',},
+        {'year': 2019, 'route': './Estadisticas/2019/promedio_establecimiento2019.csv',},
+        {'year': 2020, 'route': './Estadisticas/2020/promedio_establecimiento2020.csv',},
+        {'year': 2021, 'route': './Estadisticas/2021/promedio_establecimiento2021.csv',},
+        {'year': 2022, 'route': './Estadisticas/2022/promedio_establecimiento2022.csv',}
+    ]
+
     # Nombre de columnas
     map_columns = {
-        'AGNO': 'AÑO',
-        'RBD': 'ROL_ESTABLECIMIENTO',
-        'DGV_RBD':'DIGITO_VERIFICADOR_RBD',
-        'NOM_RBD': 'NOMBRE_ESTABLECIMIENTO',
-        'LET_RBD': 'LETRA_ESTABLECIMIENTO',
-        'NUM_RBD':'NUMERO_ESTABLECIMIENTO',
-        'COD_REG_RBD': 'CODIGO_REGION_ESTABLECIMIENTO',
-        'NOM_REG_RBD_A': 'NOMBRE_ABREV_REGION_ESTABLECIMIENTO',
-        'COD_PRO_RBD': 'CODIGO_OFICIAL_PROVINCIA_ESTABLECIMIENTO',
-        'COD_COM_RBD': 'CODIGO_OFICIAL_COMUNA_ESTABLECIMIENTO',
-        'NOM_COM_RBD': 'NOMBRE_COMUNA_ESTABLECIMIENTO',
-        'COD_DEPROV_RBD':'CODIGO_DEPARTAMENTO_PROVINCIAL_ESTABLECIMIENTO',
-        'NOM_DEPROV_RBD':'NOMBRE_DEPARTAMENTO_PROVINCIAL_ESTABLECIMIENTO',
-        'COD_DEPE':'CODIGO_DEPENDENCIA_ESTABLECIMIENTO',
-        'COD_DEPE2':'CODIGO_DEPENDENCIA_ESTABLECIMIENTO_GRUP',
-        'RURAL_RBD':'INDICE_RURALIDAD_ESTABLECIMIENTO',
-        'ESTADO_ESTAB':'ESTADO_ESTABLECIMIENTO',
-        'COD_ENSE':'CODIGO_ENSENANZA_ESTABLECIMIENTO',
-        'COD_ENSE2':'NIVEL_ENSEÑANZA_GRUP',
-        'COD_GRADO':'CODIGO_GRADO_ESTABLECIMIENTO',
-        'LET_CUR':'LETRA_CURSO',
-        'COD_JOR':'JORNADA_ESTABLECIMIENTO',
-        'COD_TIP_CUR':'INDICE_TIPO_CURSO',
-        'COD_DES_CUR':'DESCRIPCION_CURSO',
-        'MRUN':'MASCARA_RUN_ALUMNO',
-        'GEN_ALU':'GENERO_ALUMNO',
-        'FEC_NAC_ALU':'FECHA_NACIMIENTO_ALUMNO',
-        'EDAD_ALU':'EDAD_ALUMNO',
-        'INT_ALU':'INDICADOR_ALUMNO',
-        'GD_ALU':'CONDICION_DIFERENCIAL_ALUMNO',
-        'COD_REG_ALU':'CODIGO_REGION_ALUMNO',
-        'COD_COM_ALU':'CODIGO_COMUNA_ALUMNO',
-        'NOM_COM_ALU':'NOMBRE_COMUNA_ALUMNO',
-        'COD_RAMA':'CODIGO_RAMA',
-        'COD_SEC':'CODIGO_SECTOR_ECONOMICO',
-        'COD_ESPE':'CODIGO_ESPECIALIDAD',
-        'FECH_ING_ALU':'FECHA_INGRESO_ALUMNO',
-        'PROM_GRAL':'PROMEDIO_GENERAL_ANUAL',
-        'ASISTENCIA':'ASISTENCIA_ANUAL',
-        'SIT_FIN':'SITUACION_PROMOCION',
-        'SIT_FIN_R':'SITUACION_PROMOCION_TRASLADO',
-        'COD_MEN':'MENCION'
+        'AGNO': 'AÑO','agno': 'AÑO',
+        'RBD': 'ROL_ESTABLECIMIENTO','rbd': 'ROL_ESTABLECIMIENTO',
+        'DGV_RBD':'DIGITO_VERIFICADOR_RBD','dgv_rbd':'DIGITO_VERIFICADOR_RBD',
+        'NOM_RBD': 'NOMBRE_ESTABLECIMIENTO','nom_rbd': 'NOMBRE_ESTABLECIMIENTO',
+        'LET_RBD': 'LETRA_ESTABLECIMIENTO','let_rbd': 'LETRA_ESTABLECIMIENTO',
+        'NUM_RBD':'NUMERO_ESTABLECIMIENTO','num_rbd':'NUMERO_ESTABLECIMIENTO',
+        'COD_REG_RBD': 'CODIGO_REGION_ESTABLECIMIENTO','cod_reg_rbd': 'CODIGO_REGION_ESTABLECIMIENTO',
+        'NOM_REG_RBD_A': 'NOMBRE_ABREV_REGION_ESTABLECIMIENTO','nom_reg_rbd_a': 'NOMBRE_ABREV_REGION_ESTABLECIMIENTO',
+        'COD_PRO_RBD': 'CODIGO_OFICIAL_PROVINCIA_ESTABLECIMIENTO','cod_pro_rbd': 'CODIGO_OFICIAL_PROVINCIA_ESTABLECIMIENTO',
+        'COD_COM_RBD': 'CODIGO_OFICIAL_COMUNA_ESTABLECIMIENTO','cod_com_rbd': 'CODIGO_OFICIAL_COMUNA_ESTABLECIMIENTO',
+        'NOM_COM_RBD': 'NOMBRE_COMUNA_ESTABLECIMIENTO','nom_com_rbd': 'NOMBRE_COMUNA_ESTABLECIMIENTO',
+        'COD_DEPROV_RBD':'CODIGO_DEPARTAMENTO_PROVINCIAL_ESTABLECIMIENTO','cod_deprov_rbd':'CODIGO_DEPARTAMENTO_PROVINCIAL_ESTABLECIMIENTO',
+        'NOM_DEPROV_RBD':'NOMBRE_DEPARTAMENTO_PROVINCIAL_ESTABLECIMIENTO','nom_deprov_rbd':'NOMBRE_DEPARTAMENTO_PROVINCIAL_ESTABLECIMIENTO',
+        'COD_DEPE':'CODIGO_DEPENDENCIA_ESTABLECIMIENTO','cod_depe':'CODIGO_DEPENDENCIA_ESTABLECIMIENTO',
+        'COD_DEPE2':'CODIGO_DEPENDENCIA_ESTABLECIMIENTO_GRUP','cod_depe2':'CODIGO_DEPENDENCIA_ESTABLECIMIENTO_GRUP',
+        'RURAL_RBD':'INDICE_RURALIDAD_ESTABLECIMIENTO','rural_rbd':'INDICE_RURALIDAD_ESTABLECIMIENTO',
+        'ESTADO_ESTAB':'ESTADO_ESTABLECIMIENTO','estado_estab':'ESTADO_ESTABLECIMIENTO',
+        'COD_ENSE':'CODIGO_ENSENANZA_ESTABLECIMIENTO','cod_ense':'CODIGO_ENSENANZA_ESTABLECIMIENTO',
+        'COD_ENSE2':'NIVEL_ENSEÑANZA_GRUP','cod_ense2':'NIVEL_ENSEÑANZA_GRUP',
+        'COD_GRADO':'CODIGO_GRADO_ESTABLECIMIENTO','cod_grado':'CODIGO_GRADO_ESTABLECIMIENTO',
+        'LET_CUR':'LETRA_CURSO','let_cur':'LETRA_CURSO',
+        'COD_JOR':'JORNADA_ESTABLECIMIENTO','cod_jor':'JORNADA_ESTABLECIMIENTO',
+        'COD_TIP_CUR':'INDICE_TIPO_CURSO','cod_tip_cur':'INDICE_TIPO_CURSO',
+        'COD_DES_CUR':'DESCRIPCION_CURSO','cod_des_cur':'DESCRIPCION_CURSO',
+        'MRUN':'MASCARA_RUN_ALUMNO','mrun':'MASCARA_RUN_ALUMNO',
+        'GEN_ALU':'GENERO_ALUMNO','gen_alu':'GENERO_ALUMNO',
+        'FEC_NAC_ALU':'FECHA_NACIMIENTO_ALUMNO','fec_nac_alu':'FECHA_NACIMIENTO_ALUMNO',
+        'EDAD_ALU':'EDAD_ALUMNO','edad_alu':'EDAD_ALUMNO',
+        'INT_ALU':'INDICADOR_ALUMNO','int_alu':'INDICADOR_ALUMNO',
+        'GD_ALU':'CONDICION_DIFERENCIAL_ALUMNO','gd_alu':'CONDICION_DIFERENCIAL_ALUMNO',
+        'COD_REG_ALU':'CODIGO_REGION_ALUMNO','cod_reg_alu':'CODIGO_REGION_ALUMNO',
+        'COD_COM_ALU':'CODIGO_COMUNA_ALUMNO','cod_com_alu':'CODIGO_COMUNA_ALUMNO',
+        'NOM_COM_ALU':'NOMBRE_COMUNA_ALUMNO','nom_com_alu':'NOMBRE_COMUNA_ALUMNO',
+        'COD_RAMA':'CODIGO_RAMA','cod_rama':'CODIGO_RAMA',
+        'COD_SEC':'CODIGO_SECTOR_ECONOMICO','cod_sec':'CODIGO_SECTOR_ECONOMICO',
+        'COD_ESPE':'CODIGO_ESPECIALIDAD','cod_espe':'CODIGO_ESPECIALIDAD',
+        'FECH_ING_ALU':'FECHA_INGRESO_ALUMNO','fech_ing_alu':'FECHA_INGRESO_ALUMNO',
+        'PROM_GRAL':'PROMEDIO_GENERAL_ANUAL','prom_gral':'PROMEDIO_GENERAL_ANUAL',
+        'ASISTENCIA':'ASISTENCIA_ANUAL','asistencia':'ASISTENCIA_ANUAL',
+        'SIT_FIN':'SITUACION_PROMOCION','sit_fin':'SITUACION_PROMOCION',
+        'SIT_FIN_R':'SITUACION_PROMOCION_TRASLADO','sit_fin_r':'SITUACION_PROMOCION_TRASLADO',
+        'COD_MEN':'MENCION', 'cod_men':'MENCION'
+        
     }
 
     # Mapa de codigo region (COD_REG_RBD)
@@ -487,7 +513,7 @@ class Utilidades:
 
                     # Almacenar estadisticas en un archivo .csv
                     descripcion_estats = rendimiento.describe()
-                    descripcion_estats.to_csv('Estadisticas/'+str(year)+'/rendimiento'+str(year)+'_descripcion.csv')
+                    descripcion_estats.to_csv('Estadisticas/'+str(year)+'/rendimiento'+str(year)+'_descripcion.csv', index=False)
 
                     return rendimiento
 
@@ -526,11 +552,12 @@ class Utilidades:
             analisis_estudiante = rendimiento[[
                 'NOMBRE_ESTABLECIMIENTO', 'CODIGO_REGION_ESTABLECIMIENTO', 'CODIGO_OFICIAL_COMUNA_ESTABLECIMIENTO', 
                 'CODIGO_DEPENDENCIA_ESTABLECIMIENTO', 'CODIGO_ENSENANZA_ESTABLECIMIENTO', 'CODIGO_GRADO_ESTABLECIMIENTO', 
-                'GENERO_ALUMNO', 'CODIGO_COMUNA_ALUMNO', 'PROMEDIO_GENERAL_ANUAL', 'ASISTENCIA_ANUAL','MASCARA_RUN_ALUMNO'
+                'GENERO_ALUMNO', 'CODIGO_COMUNA_ALUMNO', 'PROMEDIO_GENERAL_ANUAL', 'ASISTENCIA_ANUAL','MASCARA_RUN_ALUMNO',
+                'ROL_ESTABLECIMIENTO'
                 ]]
             
             # Almacenar dataset en un archivo .csv
-            analisis_estudiante.to_csv('Estadisticas/'+str(year)+'/analisis_estudiante'+str(year)+'.csv')
+            analisis_estudiante.to_csv('Estadisticas/'+str(year)+'/analisis_estudiante'+str(year)+'.csv', index=False)
 
             return analisis_estudiante
         except Exception as e:
@@ -556,7 +583,7 @@ class Utilidades:
     def getPromedioEstablecimiento(self, dataframe, year):
         try:
             rendimiento = dataframe
-            promedio_establecimiento = rendimiento.groupby('NOMBRE_ESTABLECIMIENTO')['PROMEDIO_GENERAL_ANUAL'].mean().reset_index()
+            promedio_establecimiento = rendimiento.groupby(['ROL_ESTABLECIMIENTO','NOMBRE_ESTABLECIMIENTO'])['PROMEDIO_GENERAL_ANUAL'].mean().reset_index()
             
             # Agregar columna de año
             promedio_establecimiento['ANIO'] = year
@@ -565,7 +592,7 @@ class Utilidades:
             promedio_establecimiento = promedio_establecimiento.sort_values('PROMEDIO_GENERAL_ANUAL', ascending=False)
 
             # Almacenar dataset en un archivo .csv
-            promedio_establecimiento.to_csv('Estadisticas/'+str(year)+'/promedio_establecimiento'+str(year)+'.csv')
+            promedio_establecimiento.to_csv('Estadisticas/'+str(year)+'/promedio_establecimiento'+str(year)+'.csv', index=False)
             return promedio_establecimiento
         except Exception as e:
             print('Error al obtener el promedio de promedio por establecimiento del año:', year)
@@ -596,7 +623,7 @@ class Utilidades:
                 rendimiento = pd.concat([rendimiento, dummies], axis=1)
             
             # Almacenar dataset en un archivo .csv
-            rendimiento.to_csv('Estadisticas/'+str(year)+'/rendimiento_dummies'+str(year)+'.csv')
+            rendimiento.to_csv('Estadisticas/'+str(year)+'/rendimiento_dummies'+str(year)+'.csv', index=False)
             return rendimiento
 
         except Exception as e:
@@ -691,7 +718,7 @@ class Utilidades:
         plt.axhline(df_trabajar['PROMEDIO_GENERAL_ANUAL'].mean(), color='black', linestyle='--', label='Promedio general')
         plt.text(1.1, df_trabajar['PROMEDIO_GENERAL_ANUAL'].mean(), round(df_trabajar['PROMEDIO_GENERAL_ANUAL'].mean(), 2), ha="center", va="bottom", fontsize=8)
 
-        # TITULOS Y ETIQUETAS
+        # TITULOS Y ETIQUETASestablecimientosunicos
         plt.title(f'Promedio de promedio general de alumnos por dependencia y genero - {year}')
         plt.xlabel('Dependencia')
         plt.ylabel('Promedio de promedio general')
@@ -702,3 +729,15 @@ class Utilidades:
         # ALMACENAR GRAFICO
         plt.tight_layout()
         plt.savefig('Estadisticas/'+str(year)+'/Graficos/grafico_promedio_dependencia'+str(year)+'.png')
+
+    # Funcion que obtenga los nombres de los establecimientos sin duplicados
+    def getEstablecimientosUnicos(self, dataframe, year):
+        try:
+            rendimiento = dataframe
+            df_establecimientos = rendimiento[['NOMBRE_ESTABLECIMIENTO', 'ROL_ESTABLECIMIENTO']].drop_duplicates()
+            df_establecimientos.to_csv('Estadisticas/'+str(year)+'/establecimientos_unicos'+str(year)+'.csv', index=False)
+            return df_establecimientos
+        except Exception as e:
+            print('Error al determinar los establecimientos unicos del año:', year)
+            print('Error:', e)
+            return None
