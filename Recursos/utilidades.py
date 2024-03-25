@@ -61,6 +61,30 @@ class Utilidades:
         {'year': 2022, 'route': './Estadisticas/2022/promedio_establecimiento2022.csv',}
     ]
 
+    routes_promedio_region = [
+        {'year': 2002, 'route': './Estadisticas/2002/promedio_region2002.csv',},
+        {'year': 2003, 'route': './Estadisticas/2003/promedio_region2003.csv',},
+        {'year': 2004, 'route': './Estadisticas/2004/promedio_region2004.csv',},
+        {'year': 2005, 'route': './Estadisticas/2005/promedio_region2005.csv',},
+        {'year': 2006, 'route': './Estadisticas/2006/promedio_region2006.csv',},
+        {'year': 2007, 'route': './Estadisticas/2007/promedio_region2007.csv',},
+        {'year': 2008, 'route': './Estadisticas/2008/promedio_region2008.csv',},
+        {'year': 2009, 'route': './Estadisticas/2009/promedio_region2009.csv',},
+        {'year': 2010, 'route': './Estadisticas/2010/promedio_region2010.csv',},
+        {'year': 2011, 'route': './Estadisticas/2011/promedio_region2011.csv',},
+        {'year': 2012, 'route': './Estadisticas/2012/promedio_region2012.csv',},
+        {'year': 2013, 'route': './Estadisticas/2013/promedio_region2013.csv',},
+        {'year': 2014, 'route': './Estadisticas/2014/promedio_region2014.csv',},
+        {'year': 2015, 'route': './Estadisticas/2015/promedio_region2015.csv',},
+        {'year': 2016, 'route': './Estadisticas/2016/promedio_region2016.csv',},
+        {'year': 2017, 'route': './Estadisticas/2017/promedio_region2017.csv',},
+        {'year': 2018, 'route': './Estadisticas/2018/promedio_region2018.csv',},
+        {'year': 2019, 'route': './Estadisticas/2019/promedio_region2019.csv',},
+        {'year': 2020, 'route': './Estadisticas/2020/promedio_region2020.csv',},
+        {'year': 2021, 'route': './Estadisticas/2021/promedio_region2021.csv',},
+        {'year': 2022, 'route': './Estadisticas/2022/promedio_region2022.csv',}
+    ]
+
     # Nombre de columnas
     map_columns = {
         'AGNO': 'AÑO','agno': 'AÑO',
@@ -600,6 +624,26 @@ class Utilidades:
             print('Error:', e)
             return None
         
+    # Funcion para obtener el promedio de PROMEDIO_GENERAL_ANUAL por CODIGO_REGION_ESTABLECIMIENTO
+    def getPromedioRegion(self, dataframe, year):
+        try:
+            rendimiento = dataframe
+            promedio_region = rendimiento.groupby('CODIGO_REGION_ESTABLECIMIENTO')['PROMEDIO_GENERAL_ANUAL'].mean().reset_index()
+            
+            # Agregar columna de año
+            promedio_region['ANIO'] = year
+
+            # Ordenar de forma descendente
+            promedio_region = promedio_region.sort_values('PROMEDIO_GENERAL_ANUAL', ascending=False)
+
+            # Almacenar dataset en un archivo .csv
+            promedio_region.to_csv('Estadisticas/'+str(year)+'/promedio_region'+str(year)+'.csv', index=False)
+            return promedio_region
+        except Exception as e:
+            print('Error al obtener el promedio de promedio por region del año:', year)
+            print('Error:', e)
+            return None
+        
     # Funcion para generar columnas dummy para las columnas:
         ## CODIGO_REGION_ESTABLECIMIENTO
         ## CODIGO_DEPENDENCIA_ESTABLECIMIENTO
@@ -839,5 +883,54 @@ class Utilidades:
         # Almacenar el grafico
         plt.tight_layout()
         plt.savefig('Estadisticas/Generales/Graficos/grafico_promedio_establecimiento'+str(rol1)+'_'+str(rol2)+'.png')
+
+    # Graficar promedio de promedio general por año por region
+    def graficoTemporalPromedioRegion(self, dataframe, region):
+        rendimiento = dataframe
+
+        rendimiento = rendimiento[rendimiento['CODIGO_REGION_ESTABLECIMIENTO'] == region]
+
+        # Calcular el cambio en el promedio general de un año a otro
+        rendimiento['CAMBIO_PROMEDIO'] = [1 if i >= rendimiento['PROMEDIO_GENERAL_ANUAL'].iloc[indx - 1] else 0 for indx, i in enumerate(rendimiento['PROMEDIO_GENERAL_ANUAL'])]
+
+        # Definir los colores basados en el cambio del promedio
+        colors = ['blue' if cambio == 1 else 'red' for cambio in rendimiento['CAMBIO_PROMEDIO']]
+
+        # Grafico de linea de promedio de promedio general de alumnos por año
+        plt.figure(figsize=(12, 8))
+        sns.lineplot(
+            x='ANIO',
+            y='PROMEDIO_GENERAL_ANUAL',
+            data=rendimiento,
+            color='grey'  # Color de línea gris
+        )
+
+        # Plotear puntos con colores basados en el cambio del promedio
+        plt.scatter(
+            x=rendimiento['ANIO'],
+            y=rendimiento['PROMEDIO_GENERAL_ANUAL'],
+            color=colors,
+            s=100
+        )
+
+        # Asignar el valor del promedio de promedio general a cada punto
+        for indx, promedio in enumerate(rendimiento['PROMEDIO_GENERAL_ANUAL']):
+            cambio = rendimiento['CAMBIO_PROMEDIO'].iloc[indx]
+            color = 'blue' if cambio == 1 else 'red'
+            plt.text(rendimiento['ANIO'].iloc[indx], promedio, f'{promedio:.2f}', color=color, ha='center', va='bottom', bbox=dict(facecolor='white', edgecolor='none', pad=2))
+
+        # Titulos y etiquetas
+        plt.title(f'Promedio de promedio general de alumnos por año - {region}')
+        plt.xlabel('Año')
+        plt.ylabel('Promedio escala 1.0 a 7.0')
+
+        # Incorporar una linea horizontal en el promedio general
+        plt.axhline(rendimiento['PROMEDIO_GENERAL_ANUAL'].mean(), color='black', linestyle='--', label='Promedio general')
+
+        # Almacenar el grafico
+        plt.tight_layout()
+        plt.savefig('Estadisticas/Generales/Graficos/grafico_promedio_region'+str(region)+'.png')
+        
+
 
         

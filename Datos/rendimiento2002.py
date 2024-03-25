@@ -83,15 +83,27 @@ for ruta_promedio in util.routes_promedio:
     merge_establecimientos = pd.concat([merge_establecimientos, df], ignore_index=True)
     merge_establecimientos.to_csv('Estadisticas/Generales/promedioestablecimiento20022022.csv', index=False)
 
-
+print('---------------------------------')
 # ------------ CONSEGUIR REGISTROS DE merge_establecimientos EN QUE EL VALOR DE ROL_ESTABLECIMIENTO SEA 9967 ------------
 rol1 = 9570
 rol2 = 9967
-util.graficosComparativosPromedioEstablecimiento(dataframe=merge_establecimientos, rol1=rol1, rol2=rol2)
+# Caso: Grafico de un solo colegio
+#util.graficoPromedioEstablecimiento(dataframe=merge_establecimientos, rol1=rol1)
+# Caso: Grafico comparativo de dos colegios
+#util.graficosComparativosPromedioEstablecimiento(dataframe=merge_establecimientos, rol1=rol1, rol2=rol2)
+
+# ----------- CONSEGUIR DATAFRAME DE PROMEDIO GENERAL ANUAL POR CODIGO REGION -----------
+merge_regionpromedio = pd.DataFrame()
+for ruta_promedio in util.routes_promedio_region:
+    print('Incorporando dataframe: ', ruta_promedio['year'])
+    df = pd.read_csv(ruta_promedio['route'])
+    merge_regionpromedio = pd.concat([merge_regionpromedio, df], ignore_index=True)
+    merge_regionpromedio.to_csv('Estadisticas/Generales/promedioregion20022022.csv', index=False)
 
 
-
-
-
+# ------------ CONSEGUIR REGISTROS DE merge_regionpromedio EN QUE EL VALOR DE CODIGO_REGION SEA 1 ------------
+codigo_region = 1
+# Caso: Grafico de una sola region
+util.graficoTemporalPromedioRegion(dataframe=merge_regionpromedio, region=codigo_region)
 
 
