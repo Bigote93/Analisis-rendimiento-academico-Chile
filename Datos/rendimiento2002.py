@@ -85,8 +85,9 @@ for ruta_promedio in util.routes_promedio:
 
 
 # ------------ CONSEGUIR REGISTROS DE merge_establecimientos EN QUE EL VALOR DE ROL_ESTABLECIMIENTO SEA 9967 ------------
-rol = 9967
-print(util.graficoPromedioEstablecimiento(dataframe=merge_establecimientos, rolestablecimiento=rol))
+rol1 = 9570
+rol2 = 9967
+util.graficosComparativosPromedioEstablecimiento(dataframe=merge_establecimientos, rol1=rol1, rol2=rol2)
 
 
 
