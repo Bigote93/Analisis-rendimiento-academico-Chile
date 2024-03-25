@@ -102,8 +102,11 @@ for ruta_promedio in util.routes_promedio_region:
 
 
 # ------------ CONSEGUIR REGISTROS DE merge_regionpromedio EN QUE EL VALOR DE CODIGO_REGION SEA 1 ------------
-codigo_region = 1
+codigo_region1 = 1
+codigo_region2 = 10
 # Caso: Grafico de una sola region
-util.graficoTemporalPromedioRegion(dataframe=merge_regionpromedio, region=codigo_region)
+util.graficoTemporalPromedioRegion(dataframe=merge_regionpromedio, region=codigo_region1)
+# Caso: Grafico comparativo de dos regiones
+util.graficosComparativosPromedioRegion(dataframe=merge_regionpromedio, region1=codigo_region1, region2=codigo_region2)
 
 

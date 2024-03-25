@@ -932,5 +932,54 @@ class Utilidades:
         plt.savefig('Estadisticas/Generales/Graficos/grafico_promedio_region'+str(region)+'.png')
         
 
+    def graficosComparativosPromedioRegion(self, dataframe, region1,region2):
+        rendimiento = dataframe
 
+        # Filtrar datos por roles
+        rendimiento1 = rendimiento[rendimiento['CODIGO_REGION_ESTABLECIMIENTO'] == region1]
+        rendimiento2 = rendimiento[rendimiento['CODIGO_REGION_ESTABLECIMIENTO'] == region2]
+
+        # Calcular cambios de promedio para cada rol
+        rendimiento1['CAMBIO_PROMEDIO'] = [1 if i >= rendimiento1['PROMEDIO_GENERAL_ANUAL'].iloc[indx - 1] else 0 for indx, i in enumerate(rendimiento1['PROMEDIO_GENERAL_ANUAL'])]
+        rendimiento2['CAMBIO_PROMEDIO'] = [1 if i >= rendimiento2['PROMEDIO_GENERAL_ANUAL'].iloc[indx - 1] else 0 for indx, i in enumerate(rendimiento2['PROMEDIO_GENERAL_ANUAL'])]
+
+        # Definir los colores basados en el cambio del promedio para cada rol
+        colors1 = ['blue' if cambio == 1 else 'red' for cambio in rendimiento1['CAMBIO_PROMEDIO']]
+        colors2 = ['blue' if cambio == 1 else 'red' for cambio in rendimiento2['CAMBIO_PROMEDIO']]
+
+        # Graficar líneas de promedio general
+        plt.figure(figsize=(12, 8))
+        sns.lineplot(x='ANIO', y='PROMEDIO_GENERAL_ANUAL', data=rendimiento1, color='green', label=region1)
+        sns.lineplot(x='ANIO', y='PROMEDIO_GENERAL_ANUAL', data=rendimiento2, color='indigo', label=region2)
+
+        # Plotear puntos con colores basados en el cambio del promedio para cada rol
+        plt.scatter(x=rendimiento1['ANIO'], y=rendimiento1['PROMEDIO_GENERAL_ANUAL'], color=colors1, s=100)
+        plt.scatter(x=rendimiento2['ANIO'], y=rendimiento2['PROMEDIO_GENERAL_ANUAL'], color=colors2, s=100)
+
+        # Etiquetas para los puntos
+        for indx, promedio in enumerate(rendimiento1['PROMEDIO_GENERAL_ANUAL']):
+            cambio = rendimiento1['CAMBIO_PROMEDIO'].iloc[indx]
+            color = 'blue' if cambio == 1 else 'red'
+            plt.text(rendimiento1['ANIO'].iloc[indx], promedio, f'{promedio:.2f}', color=color, ha='center', va='bottom', bbox=dict(facecolor='white', edgecolor='none', pad=2))
+
+        for indx, promedio in enumerate(rendimiento2['PROMEDIO_GENERAL_ANUAL']):
+            cambio = rendimiento2['CAMBIO_PROMEDIO'].iloc[indx]
+            color = 'blue' if cambio == 1 else 'red'
+            plt.text(rendimiento2['ANIO'].iloc[indx], promedio, f'{promedio:.2f}', color=color, ha='center', va='bottom', bbox=dict(facecolor='white', edgecolor='none', pad=2))
+
+        # Titulos y etiquetas
+        plt.title(f'Promedio de promedio general de alumnos por año - {region1} vs {region2}')
+        plt.xlabel('Año')
+        plt.ylabel('Promedio escala 1.0 a 7.0')
+
+        # Incorporar líneas horizontales de promedio general
+        plt.axhline(rendimiento1['PROMEDIO_GENERAL_ANUAL'].mean(), color='blue', linestyle='--', label=f'Promedio general {region1}')
+        plt.axhline(rendimiento2['PROMEDIO_GENERAL_ANUAL'].mean(), color='red', linestyle='--', label=f'Promedio general {region2}')
+
+        # Agregar leyenda
+        plt.legend()
+
+        # Almacenar el grafico
+        plt.tight_layout()
+        plt.savefig('Estadisticas/Generales/Graficos/grafico_promedio_region'+str(region1)+'_'+str(region2)+'.png')
         
